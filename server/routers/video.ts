@@ -73,7 +73,7 @@ export const videoRouter = router({
 3. An optimized image generation prompt (detailed, visual, specific)
 4. The text content for this scene
 
-Format your response as a JSON array with objects containing: title, description, imagePrompt, textContent
+Respond with a JSON object containing a 'scenes' array with objects having: title, description, imagePrompt, textContent
 
 Story:
 ${input.text}`;
@@ -123,12 +123,30 @@ ${input.text}`;
         const content = response.choices[0]?.message?.content;
         if (typeof content === "string") {
           sceneData = JSON.parse(content);
+          
+          // Validate the response structure
+          if (!sceneData.scenes || !Array.isArray(sceneData.scenes)) {
+            throw new Error("Invalid response structure: expected { scenes: [...] }");
+          }
+          
+          if (sceneData.scenes.length === 0) {
+            throw new Error("No scenes generated");
+          }
+          
+          // Validate each scene
+          for (const scene of sceneData.scenes) {
+            if (!scene.title || !scene.description || !scene.imagePrompt || !scene.textContent) {
+              throw new Error("Invalid scene structure: missing required fields");
+            }
+          }
         } else {
-          throw new Error("Invalid response format");
+          throw new Error("Invalid response format from LLM");
         }
       } catch (error) {
-        await updateVideoProject(input.projectId, { status: "failed", errorMessage: "Failed to parse LLM response" });
-        throw error;
+        const errorMsg = error instanceof Error ? error.message : "Failed to parse LLM response";
+        console.error("[Video] Scene analysis error:", errorMsg);
+        await updateVideoProject(input.projectId, { status: "failed", errorMessage: errorMsg });
+        throw new Error(errorMsg);
       }
       
       // Create scenes in the database

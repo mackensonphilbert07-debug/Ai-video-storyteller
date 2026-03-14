@@ -40,7 +40,7 @@ export async function composeFullVideo(
     const concatFile = path.join(path.dirname(outputPath), "concat.txt");
     const concatContent = sceneVideoPaths
       .map((videoPath) => `file '${videoPath}'`)
-      .join("\\n");
+      .join("\n");
     fs.writeFileSync(concatFile, concatContent);
     const bitrate = options?.bitrate || "5000k";
     const command = `ffmpeg -f concat -safe 0 -i "${concatFile}" -c:v libx264 -preset medium -b:v ${bitrate} -c:a aac -y "${outputPath}"`;

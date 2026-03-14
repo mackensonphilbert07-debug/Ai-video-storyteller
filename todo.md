@@ -82,3 +82,10 @@
 - [x] Augmenter la limite de caractères à 30 000 pour les histoires longues
 - [x] Optimiser le traitement des histoires longues (8-10+ minutes)
 - [x] Ajouter la validation de longueur d'histoire au backend
+
+## Bugs à Corriger
+- [x] Erreur lors de la génération des scènes (message d'erreur générique)
+  - Corrigé: Route Home path="\\" -> "/"
+  - Corrigé: createVideoProject retourne maintenant l'ID du projet
+  - Corrigé: Validation robuste de la réponse LLM
+  - Corrigé: Messages d'erreur détaillés au frontend

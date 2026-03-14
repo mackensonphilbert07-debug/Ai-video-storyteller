@@ -64,7 +64,10 @@ export default function StoryGenerator() {
         text: storyText,
       });
 
-      const newProjectId = (projectResult as any).insertId || projectId;
+      const newProjectId = (projectResult as any).id;
+      if (!newProjectId) {
+        throw new Error("Failed to create project: no ID returned");
+      }
       setProjectId(newProjectId);
 
       // Analyze and generate scenes
@@ -78,7 +81,8 @@ export default function StoryGenerator() {
       toast.success(`${scenesResult.scenes.length} scènes générées avec succès!`);
     } catch (error) {
       console.error("Error generating scenes:", error);
-      toast.error("Erreur lors de la génération des scènes");
+      const errorMessage = error instanceof Error ? error.message : "Erreur lors de la génération des scènes";
+      toast.error(errorMessage);
     } finally {
       setIsGeneratingScenes(false);
     }

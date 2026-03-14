@@ -105,12 +105,22 @@ export async function createVideoProject(userId: number, project: Omit<InsertVid
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  const result = await db.insert(videoProjects).values({
+  await db.insert(videoProjects).values({
     ...project,
     userId,
   });
   
-  return result;
+  // Get the created project to return its ID
+  const createdProjects = await db.select().from(videoProjects)
+    .where(eq(videoProjects.userId, userId))
+    .orderBy(videoProjects.createdAt)
+    .limit(1);
+  
+  if (createdProjects.length === 0) {
+    throw new Error("Failed to retrieve created project");
+  }
+  
+  return createdProjects[0];
 }
 
 export async function getUserVideoProjects(userId: number) {
