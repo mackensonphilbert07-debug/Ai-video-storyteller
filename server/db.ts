@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, videoProjects, InsertVideoProject, scenes, InsertScene, processingQueue, InsertProcessingQueueItem } from "../drizzle/schema";
+import { InsertUser, users, videoProjects, InsertVideoProject, scenes, InsertScene, processingQueue, InsertProcessingQueueItem, subscriptionPlans, userSubscriptions, userUsageTracking } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -189,4 +189,119 @@ export async function updateQueueItem(queueId: number, updates: Partial<InsertPr
   if (!db) throw new Error("Database not available");
   
   return db.update(processingQueue).set(updates).where(eq(processingQueue.id, queueId));
+}
+
+
+// Subscription Plans queries
+export async function getAllSubscriptionPlans() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.select().from(subscriptionPlans).where(eq(subscriptionPlans.isActive, 1));
+}
+
+export async function getSubscriptionPlanByName(name: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(subscriptionPlans)
+    .where(eq(subscriptionPlans.name, name))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getSubscriptionPlanById(planId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(subscriptionPlans)
+    .where(eq(subscriptionPlans.id, planId))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// User Subscriptions queries
+export async function getUserSubscription(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(userSubscriptions)
+    .where(eq(userSubscriptions.userId, userId))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createUserSubscription(userId: number, planId: number, stripeSubscriptionId?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.insert(userSubscriptions).values({
+    userId,
+    planId,
+    stripeSubscriptionId,
+    status: "active",
+  });
+}
+
+export async function updateUserSubscription(userId: number, updates: Partial<typeof userSubscriptions.$inferInsert>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.update(userSubscriptions).set(updates).where(eq(userSubscriptions.userId, userId));
+}
+
+// User Usage Tracking queries
+export async function getUserUsageForMonth(userId: number, month: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const { and } = await import("drizzle-orm");
+  const result = await db.select().from(userUsageTracking)
+    .where(and(eq(userUsageTracking.userId, userId), eq(userUsageTracking.month, month)))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createOrUpdateUserUsage(userId: number, month: string, updates: Partial<typeof userUsageTracking.$inferInsert>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await getUserUsageForMonth(userId, month);
+  
+  if (existing) {
+    return db.update(userUsageTracking).set(updates).where(eq(userUsageTracking.userId, userId));
+  } else {
+    return db.insert(userUsageTracking).values({
+      userId,
+      month,
+      ...updates,
+    });
+  }
+}
+
+export async function incrementUserVideoCount(userId: number, month: string, characterCount: number, videoDurationMinutes: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await getUserUsageForMonth(userId, month);
+  
+  if (existing) {
+    return db.update(userUsageTracking).set({
+      videosGenerated: (existing.videosGenerated || 0) + 1,
+      totalCharactersUsed: (existing.totalCharactersUsed || 0) + characterCount,
+      totalVideoMinutesGenerated: (existing.totalVideoMinutesGenerated || 0) + videoDurationMinutes,
+    }).where(eq(userUsageTracking.userId, userId));
+  } else {
+    return db.insert(userUsageTracking).values({
+      userId,
+      month,
+      videosGenerated: 1,
+      totalCharactersUsed: characterCount,
+      totalVideoMinutesGenerated: videoDurationMinutes,
+    });
+  }
 }

@@ -84,3 +84,55 @@ export const processingQueue = mysqlTable("processing_queue", {
 
 export type ProcessingQueueItem = typeof processingQueue.$inferSelect;
 export type InsertProcessingQueueItem = typeof processingQueue.$inferInsert;
+
+// Subscription Plans Table
+export const subscriptionPlans = mysqlTable("subscription_plans", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(), // "free", "standard", "pro", "premium"
+  displayName: varchar("display_name", { length: 100 }).notNull(),
+  description: text("description"),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(), // Monthly price in USD
+  maxVideosPerMonth: int("max_videos_per_month"), // null = unlimited
+  maxVideoMinutes: int("max_video_minutes"), // Maximum video duration in minutes
+  maxCharactersPerStory: int("max_characters_per_story"), // Maximum story text length
+  stripeProductId: varchar("stripe_product_id", { length: 100 }),
+  stripePriceId: varchar("stripe_price_id", { length: 100 }),
+  isActive: int("is_active").default(1),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SubscriptionPlan = typeof subscriptionPlans.$inferSelect;
+export type InsertSubscriptionPlan = typeof subscriptionPlans.$inferInsert;
+
+// User Subscriptions Table
+export const userSubscriptions = mysqlTable("user_subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  planId: int("plan_id").notNull(),
+  stripeSubscriptionId: varchar("stripe_subscription_id", { length: 100 }),
+  status: mysqlEnum("status", ["active", "canceled", "past_due", "unpaid", "trialing"]).default("active").notNull(),
+  currentPeriodStart: timestamp("current_period_start"),
+  currentPeriodEnd: timestamp("current_period_end"),
+  canceledAt: timestamp("canceled_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserSubscription = typeof userSubscriptions.$inferSelect;
+export type InsertUserSubscription = typeof userSubscriptions.$inferInsert;
+
+// User Usage Tracking Table
+export const userUsageTracking = mysqlTable("user_usage_tracking", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  month: varchar("month", { length: 7 }).notNull(), // YYYY-MM format
+  videosGenerated: int("videos_generated").default(0),
+  totalCharactersUsed: int("total_characters_used").default(0),
+  totalVideoMinutesGenerated: int("total_video_minutes_generated").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserUsageTracking = typeof userUsageTracking.$inferSelect;
+export type InsertUserUsageTracking = typeof userUsageTracking.$inferInsert;

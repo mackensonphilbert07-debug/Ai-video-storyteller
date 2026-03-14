@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO `subscription_plans` (`name`, `display_name`, `description`, `price`, `max_videos_per_month`, `max_video_minutes`, `max_characters_per_story`) VALUES\n('free', 'Free', 'Free plan - 5 videos per month', 0.00, 5, 5, 5000),\n('standard', 'Standard', 'Standard plan - Up to 5 minutes videos', 10.00, NULL, 5, 5000),\n('pro', 'Pro', 'Pro plan - Up to 10 minutes videos', 15.00, NULL, 10, 20000),\n('premium', 'Premium', 'Premium plan - Unlimited everything', 30.00, NULL, NULL, 30000);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2KCdbWbPHmEWZQX.root --database 8UHKLiaj2r5UXCVpGXt4qC --execute INSERT INTO `subscription_plans` (`name`, `display_name`, `description`, `price`, `max_videos_per_month`, `max_video_minutes`, `max_characters_per_story`) VALUES\n('free', 'Free', 'Free plan - 5 videos per month', 0.00, 5, 5, 5000),\n('standard', 'Standard', 'Standard plan - Up to 5 minutes videos', 10.00, NULL, 5, 5000),\n('pro', 'Pro', 'Pro plan - Up to 10 minutes videos', 15.00, NULL, 10, 20000),\n('premium', 'Premium', 'Premium plan - Unlimited everything', 30.00, NULL, NULL, 30000);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 68
+}

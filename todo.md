@@ -146,3 +146,25 @@
 - [x] Ajouter la navigation entre générateur et galerie
 - [ ] Implémenter le filtrage par statut (draft, processing, completed, failed)
 - [ ] Ajouter les tests unitaires pour la galerie
+
+
+## Phase 12 : Système de Monétisation
+- [ ] Ajouter les schémas de base de données pour les plans et abonnements
+- [ ] Implémenter les limites par plan (durée vidéo, caractères, nombre de vidéos)
+- [ ] Créer les procédures tRPC pour vérifier les quotas
+- [ ] Ajouter la vérification automatique avant génération
+- [ ] Implémenter le système de comptage des vidéos générées
+- [ ] Ajouter les badges de plan sur l'interface utilisateur
+
+## Phase 13 : Musique Libre de Droits
+- [ ] Rechercher et intégrer une bibliothèque de musique libre
+- [ ] Ajouter la musique de fond aux vidéos générées
+- [ ] Implémenter la sélection de musique par l'utilisateur
+- [ ] Ajouter les métadonnées de musique aux vidéos
+
+## Phase 14 : Intégration Stripe
+- [ ] Configurer Stripe pour les paiements
+- [ ] Créer les pages de sélection de plan
+- [ ] Implémenter le checkout Stripe
+- [ ] Ajouter la gestion des abonnements
+- [ ] Implémenter les webhooks Stripe

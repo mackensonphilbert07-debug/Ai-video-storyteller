@@ -15,6 +15,13 @@
       "when": 1773504613309,
       "tag": "0001_eminent_the_enforcers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1773515231102,
+      "tag": "0002_faithful_thanos",
+      "breakpoints": true
     }
   ]
 }
