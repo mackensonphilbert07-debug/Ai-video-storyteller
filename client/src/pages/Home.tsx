@@ -11,7 +11,7 @@ export default function Home() {
 
   const handleGetStarted = () => {
     if (isAuthenticated) {
-      navigate("/generator");
+      navigate("/generate");
     } else {
       window.location.href = getLoginUrl();
     }

@@ -168,3 +168,12 @@
 - [ ] Implémenter le checkout Stripe
 - [ ] Ajouter la gestion des abonnements
 - [ ] Implémenter les webhooks Stripe
+
+
+## Bug Corrigé - Bouton "Commencer Maintenant"
+- [x] Le bouton "Commencer maintenant" de la page d'accueil ne fonctionne pas
+  - Corrigé: Route était "/generator" au lieu de "/generate"
+- [x] Vérifier la navigation vers /generate
+  - Corrigé: Mise à jour de Home.tsx ligne 14
+- [x] Vérifier les erreurs TypeScript ou JavaScript
+  - Confirmé: Aucune erreur TypeScript
