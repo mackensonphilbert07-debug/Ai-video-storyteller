@@ -67,7 +67,7 @@ export const videoRouter = router({
       await updateVideoProject(input.projectId, { status: "processing" });
       
       // Use LLM to analyze the text and generate scenes
-      const analysisPrompt = `Analyze the following story and break it down into 3-5 distinct scenes. For each scene, provide:
+      const analysisPrompt = `Analyze the following story and break it down into 20-30 distinct scenes for a video of 8-10 minutes. For each scene, provide:
 1. A scene title
 2. A brief description of what happens
 3. An optimized image generation prompt (detailed, visual, specific)

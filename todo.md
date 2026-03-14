@@ -89,3 +89,22 @@
   - Corrigé: createVideoProject retourne maintenant l'ID du projet
   - Corrigé: Validation robuste de la réponse LLM
   - Corrigé: Messages d'erreur détaillés au frontend
+
+
+## Problèmes Critiques Corrigés (Phase 5)
+- [x] Seulement 3 scènes générées au lieu de 20-30 pour vidéos 8-10 minutes
+  - Corrigé: Prompt LLM augmenté de 3-5 à 20-30 scènes
+- [x] Images bloquées sur "Génération d'image..." (pas de génération réelle)
+  - Corrigé: Créé simpleVideoGenerator.ts avec génération d'images réelle
+- [x] Vidéo finale vide (0:00) après clic sur "Créer la vidéo"
+  - Corrigé: Implémenté videoGenerationRouter avec génération réelle
+- [x] Téléchargement vidéo : aucun fichier MP4 réel généré
+  - Corrigé: Procédure generateDownloadableVideo crée des fichiers MP4 réels
+- [x] Implémenter la génération d'images réelle via API Manus
+  - Corrigé: generateSceneImage utilise generateImage de Manus
+- [x] Implémenter le montage vidéo réel via FFmpeg
+  - Corrigé: Pipeline créé avec orchestration complète
+- [x] Ajouter la génération de narration vocale réelle
+  - Corrigé: textToSpeech.ts intégré au pipeline
+- [x] Augmenter le nombre de scènes générées (20-30 minimum)
+  - Corrigé: Prompt LLM demand maintenant 20-30 scènes

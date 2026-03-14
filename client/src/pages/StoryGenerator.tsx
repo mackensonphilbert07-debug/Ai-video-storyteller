@@ -32,6 +32,8 @@ export default function StoryGenerator() {
 
   const createProjectMutation = trpc.video.createProject.useMutation();
   const analyzeScenesMutation = trpc.video.analyzeAndGenerateScenes.useMutation();
+  const generateVideoMutation = trpc.videoGen.generateProjectVideo.useMutation();
+  const downloadVideoMutation = trpc.videoGen.generateDownloadableVideo.useMutation();
 
   const handleGenerateScenes = async () => {
     if (!storyText.trim()) {
@@ -94,34 +96,53 @@ export default function StoryGenerator() {
       return;
     }
 
+    if (!projectId) {
+      toast.error("Aucun projet sélectionné");
+      return;
+    }
+
     setIsGeneratingVideo(true);
 
     try {
-      // Simulate video generation
-      // In production, this would call the actual video generation API
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const result = await generateVideoMutation.mutateAsync({
+        projectId,
+      });
 
-      const mockVideoUrl = "https://example.com/generated-video.mp4";
-      setVideoUrl(mockVideoUrl);
+      setVideoUrl(result.videoUrl);
       setCurrentStep("video");
-      toast.success("Vidéo générée avec succès!");
+      toast.success(`Vidéo générée avec succès! (${result.duration}s, ${result.sceneCount} scènes)`);
     } catch (error) {
       console.error("Error creating video:", error);
-      toast.error("Erreur lors de la création de la vidéo");
+      const errorMessage = error instanceof Error ? error.message : "Erreur lors de la création de la vidéo";
+      toast.error(errorMessage);
     } finally {
       setIsGeneratingVideo(false);
     }
   };
 
-  const handleDownloadVideo = () => {
-    if (videoUrl) {
+  const handleDownloadVideo = async () => {
+    if (!projectId) {
+      toast.error("Aucun projet sélectionné");
+      return;
+    }
+
+    try {
+      toast.loading("Génération du fichier vidéo...");
+      const result = await downloadVideoMutation.mutateAsync({
+        projectId,
+      });
+
       const link = document.createElement("a");
-      link.href = videoUrl;
-      link.download = `${storyTitle || "story"}.mp4`;
+      link.href = result.videoUrl;
+      link.download = result.filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      toast.success("Téléchargement commencé");
+      toast.success("Vidéo téléchargée avec succès!");
+    } catch (error) {
+      console.error("Error downloading video:", error);
+      const errorMessage = error instanceof Error ? error.message : "Erreur lors du téléchargement";
+      toast.error(errorMessage);
     }
   };
 
