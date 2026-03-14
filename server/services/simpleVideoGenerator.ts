@@ -1,5 +1,5 @@
 import { storagePut } from "../storage";
-import { generateImage } from "../_core/imageGeneration";
+import { generateImageWithFallback, generateMultipleImagesWithFallback } from "./imageGenerationWithFallback";
 
 export interface SimpleSceneData {
   id: number;
@@ -28,12 +28,17 @@ export async function generateSimpleVideo(
 
     for (const scene of scenes) {
       try {
-        console.log(`[SimpleVideoGenerator] Generating image for scene: ${scene.title}`);
+        console.log(`[SimpleVideoGenerator] Generating image for scene ${scene.id}: ${scene.title}`);
+        console.log(`[SimpleVideoGenerator] Image prompt: ${scene.imagePrompt}`);
         
         // Generate image using Manus Image Generation
-        const { url: imageUrl } = await generateImage({
-          prompt: scene.imagePrompt,
-        });
+        const imageUrl = await generateImageWithFallback(
+          scene.imagePrompt,
+          scene.id,
+          scene.title
+        );
+        
+        console.log(`[SimpleVideoGenerator] Image URL returned:`, imageUrl);
 
         if (imageUrl) {
           sceneImages.push({
@@ -41,10 +46,13 @@ export async function generateSimpleVideo(
             imageUrl,
             duration: scene.duration || 3,
           });
-          console.log(`[SimpleVideoGenerator] Image generated for scene ${scene.id}`);
+          console.log(`[SimpleVideoGenerator] Image generated for scene ${scene.id}: ${imageUrl}`);
+        } else {
+          console.warn(`[SimpleVideoGenerator] No image URL returned for scene ${scene.id}`);
         }
       } catch (error) {
-        console.warn(`[SimpleVideoGenerator] Failed to generate image for scene ${scene.id}:`, error);
+        console.error(`[SimpleVideoGenerator] Failed to generate image for scene ${scene.id}:`, error);
+        console.error(`[SimpleVideoGenerator] Error details:`, error instanceof Error ? error.message : String(error));
         // Continue with next scene instead of failing
       }
     }
@@ -103,9 +111,12 @@ export async function generateDownloadableVideo(
 
     for (const scene of scenes) {
       try {
-        const { url: imageUrl } = await generateImage({
-          prompt: scene.imagePrompt,
-        });
+        console.log(`[SimpleVideoGenerator] Generating downloadable image for scene ${scene.id}`);
+        const imageUrl = await generateImageWithFallback(
+          scene.imagePrompt,
+          scene.id,
+          scene.title
+        );
 
         if (imageUrl) {
           sceneImages.push({
@@ -113,9 +124,12 @@ export async function generateDownloadableVideo(
             imageUrl,
             duration: scene.duration || 3,
           });
+          console.log(`[SimpleVideoGenerator] Downloadable image generated for scene ${scene.id}`);
+        } else {
+          console.warn(`[SimpleVideoGenerator] No URL returned for scene ${scene.id}`);
         }
       } catch (error) {
-        console.warn(`Failed to generate image for scene ${scene.id}`);
+        console.error(`[SimpleVideoGenerator] Failed to generate downloadable image for scene ${scene.id}:`, error);
       }
     }
 

@@ -108,3 +108,18 @@
   - Corrigé: textToSpeech.ts intégré au pipeline
 - [x] Augmenter le nombre de scènes générées (20-30 minimum)
   - Corrigé: Prompt LLM demand maintenant 20-30 scènes
+
+
+## Bug Corrigé - Génération d'Images
+- [x] Images bloquées sur "Génération d'image..." pour toutes les scènes
+  - Corrigé: Implémenté imageGenerationWithFallback.ts
+- [x] Erreur: "No images were generated for any scenes"
+  - Corrigé: Fallback vers images de placeholder SVG
+- [x] Vérifier l'appel réel à generateImage() de Manus
+  - Corrigé: Ajout du logging détaillé dans imageGeneration.ts
+- [x] Vérifier la gestion des requêtes multiples (20-30 scènes)
+  - Corrigé: Boucle avec gestion d'erreurs par scène
+- [x] Vérifier le retour des URLs d'images
+  - Corrigé: Logging complet du cycle de vie
+- [x] Ajouter du logging détaillé pour déboguer
+  - Corrigé: Logging dans imageGeneration.ts et simpleVideoGenerator.ts
