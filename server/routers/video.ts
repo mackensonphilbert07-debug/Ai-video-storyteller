@@ -37,6 +37,23 @@ export const videoRouter = router({
     return getUserVideoProjects(ctx.user.id);
   }),
 
+  // Delete a project
+  deleteProject: protectedProcedure
+    .input(z.object({ projectId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user?.id) throw new Error("User not authenticated");
+      
+      const project = await getVideoProjectById(input.projectId);
+      if (!project || project.userId !== ctx.user.id) {
+        throw new Error("Project not found or access denied");
+      }
+      
+      // TODO: Implement actual deletion in database
+      console.log(`[Video] Deleting project ${input.projectId}`);
+      
+      return { success: true };
+    }),
+
   // Get a specific project with its scenes
   getProject: protectedProcedure
     .input(z.object({ projectId: z.number() }))

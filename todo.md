@@ -136,3 +136,13 @@
   - Corrigé: Extraction des premières phrases
 - [x] Générer les prompts d'images localement
   - Corrigé: Extraction des mots-clés significatifs
+
+
+## Phase 11 : Galerie de Projets Vidéo
+- [x] Créer la page ProjectGallery.tsx
+- [x] Afficher tous les projets de l'utilisateur avec statut
+- [x] Ajouter les cartes de projet (titre, description, durée, date)
+- [x] Implémenter les actions (prévisualiser, télécharger, supprimer)
+- [x] Ajouter la navigation entre générateur et galerie
+- [ ] Implémenter le filtrage par statut (draft, processing, completed, failed)
+- [ ] Ajouter les tests unitaires pour la galerie

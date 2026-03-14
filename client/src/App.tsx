@@ -6,13 +6,15 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import StoryGenerator from "./pages/StoryGenerator";
+import ProjectGallery from "./pages/ProjectGallery";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/generator"} component={StoryGenerator} />
+      <Route path={""} component={Home} />
+      <Route path={"/generate"} component={StoryGenerator} />
+      <Route path={"/projects"} component={ProjectGallery} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
