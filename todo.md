@@ -123,3 +123,16 @@
   - Corrigé: Logging complet du cycle de vie
 - [x] Ajouter du logging détaillé pour déboguer
   - Corrigé: Logging dans imageGeneration.ts et simpleVideoGenerator.ts
+
+
+## Bug Corrigé - LLM Manus Quota Exhausted
+- [x] Remplacer le LLM Manus par un système local de découpage de scènes
+  - Corrigé: Créé localSceneAnalyzer.ts
+- [x] Implémenter un analyseur de texte local (sans API externe)
+  - Corrigé: Analyse basée sur paragraphes et phrases
+- [x] Diviser l'histoire en scènes basées sur les paragraphes et ponctuation
+  - Corrigé: Découpage intelligent par paragraphes/phrases
+- [x] Générer les descriptions de scènes localement
+  - Corrigé: Extraction des premières phrases
+- [x] Générer les prompts d'images localement
+  - Corrigé: Extraction des mots-clés significatifs
