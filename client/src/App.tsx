@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import StoryGenerator from "./pages/StoryGenerator";
 import ProjectGallery from "./pages/ProjectGallery";
+import PricingPage from "./pages/PricingPage";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -15,6 +16,7 @@ function Router() {
       <Route path={""} component={Home} />
       <Route path={"/generate"} component={StoryGenerator} />
       <Route path={"/projects"} component={ProjectGallery} />
+      <Route path={"/pricing"} component={PricingPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

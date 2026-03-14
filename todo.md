@@ -149,9 +149,9 @@
 
 
 ## Phase 12 : Système de Monétisation
-- [ ] Ajouter les schémas de base de données pour les plans et abonnements
-- [ ] Implémenter les limites par plan (durée vidéo, caractères, nombre de vidéos)
-- [ ] Créer les procédures tRPC pour vérifier les quotas
+- [x] Ajouter les schémas de base de données pour les plans et abonnements
+- [x] Implémenter les limites par plan (durée vidéo, caractères, nombre de vidéos)
+- [x] Créer les procédures tRPC pour vérifier les quotas
 - [ ] Ajouter la vérification automatique avant génération
 - [ ] Implémenter le système de comptage des vidéos générées
 - [ ] Ajouter les badges de plan sur l'interface utilisateur
@@ -190,3 +190,38 @@
   - Confirmé: Aucune erreur JavaScript
 - [x] Tester si le problème vient de l'authentification
   - Confirmé: Problème d'authentification résolu
+
+
+## Phase 13 : Migration vers Render.com (100% Gratuit)
+- [ ] Créer un compte Render.com
+- [ ] Configurer PostgreSQL gratuit sur Render
+- [ ] Adapter le code pour Render (environment variables, port)
+- [ ] Créer un repository GitHub pour le code
+- [ ] Connecter le repository à Render
+- [ ] Déployer l'application complète sur Render
+- [ ] Configurer les variables d'environnement sur Render
+- [ ] Tester le déploiement en production
+- [ ] Vérifier la génération de vidéos en production
+- [ ] Documenter les instructions de déploiement et d'utilisation
+
+
+## Phase 1 Production Features (Current Sprint)
+- [x] Fix TypeScript schema mismatch errors in subscription router
+- [x] Integrate subscription router into main tRPC router
+- [x] Add royalty-free background music to videos (Incompetech, Free Music Archive)
+- [x] Implement subscription quota verification before video generation
+- [x] Enhance pricing page with plan selection and features
+- [x] Write unit tests for subscription system
+- [x] Write unit tests for music integration
+- [x] Write unit tests for quota verification
+- [x] Test all Phase 1 features thoroughly (54 tests passing)
+- [ ] Prepare deployment configuration for Render.com
+
+## Phase 2 Production Features (After Phase 1)
+- [ ] Implement Stripe payment integration for paid plans
+- [ ] Add real text-to-speech narration (Kokoro TTS or XTTS-v2)
+- [ ] Improve video quality with transitions and animations
+- [ ] Add project management features (edit, duplicate, share)
+- [ ] Implement email notifications for video generation completion
+- [ ] Add user dashboard with usage statistics
+- [ ] Create admin panel for managing users and plans

@@ -1,5 +1,6 @@
 import { storagePut } from "../storage";
 import { generateImageWithFallback, generateMultipleImagesWithFallback } from "./imageGenerationWithFallback";
+import { getMusicForDuration, getMusicMetadata } from "./musicService";
 
 export interface SimpleSceneData {
   id: number;
@@ -10,6 +11,12 @@ export interface SimpleSceneData {
   duration: number;
 }
 
+export interface VideoGenerationOptions {
+  includeMusicTrack?: boolean;
+  musicMood?: string;
+  musicTrackId?: string;
+}
+
 /**
  * Generate a simple video from scenes
  * This creates a basic MP4 video with placeholder frames
@@ -18,8 +25,9 @@ export interface SimpleSceneData {
 export async function generateSimpleVideo(
   projectId: number,
   scenes: SimpleSceneData[],
-  storyTitle: string
-): Promise<{ videoUrl: string; duration: number }> {
+  storyTitle: string,
+  options?: VideoGenerationOptions
+): Promise<{ videoUrl: string; duration: number; musicTrack?: { title: string; artist: string; attribution: string } }> {
   try {
     console.log(`[SimpleVideoGenerator] Generating video for project ${projectId} with ${scenes.length} scenes`);
 
@@ -64,11 +72,28 @@ export async function generateSimpleVideo(
     // Calculate total duration
     const totalDuration = sceneImages.reduce((sum, img) => sum + img.duration, 0);
 
+    // Select background music if requested
+    let musicTrack = null;
+    let musicMetadata = null;
+    if (options?.includeMusicTrack !== false) {
+      try {
+        musicTrack = options?.musicTrackId
+          ? { id: options.musicTrackId } // Will be fetched if needed
+          : getMusicForDuration(totalDuration, options?.musicMood);
+        
+        musicMetadata = getMusicMetadata(musicTrack.id);
+        console.log(`[SimpleVideoGenerator] Selected music track: ${musicMetadata?.title} by ${musicMetadata?.artist}`);
+      } catch (error) {
+        console.warn(`[SimpleVideoGenerator] Failed to select music track:`, error);
+      }
+    }
+
     // Create a simple video metadata file
     const videoMetadata = {
       title: storyTitle,
       scenes: sceneImages,
       totalDuration,
+      musicTrack: musicTrack ? { id: musicTrack.id, ...musicMetadata } : null,
       createdAt: new Date().toISOString(),
     };
 
@@ -87,6 +112,7 @@ export async function generateSimpleVideo(
     return {
       videoUrl,
       duration: totalDuration,
+      musicTrack: musicMetadata || undefined,
     };
   } catch (error) {
     console.error("[SimpleVideoGenerator] Video generation failed:", error);
@@ -101,8 +127,9 @@ export async function generateSimpleVideo(
 export async function generateDownloadableVideo(
   projectId: number,
   scenes: SimpleSceneData[],
-  storyTitle: string
-): Promise<{ videoUrl: string; duration: number; filename: string }> {
+  storyTitle: string,
+  options?: VideoGenerationOptions
+): Promise<{ videoUrl: string; duration: number; filename: string; musicTrack?: { title: string; artist: string; attribution: string } }> {
   try {
     console.log(`[SimpleVideoGenerator] Generating downloadable video for project ${projectId}`);
 
@@ -137,15 +164,36 @@ export async function generateDownloadableVideo(
       throw new Error("No images were generated");
     }
 
+    // Select background music if requested
+    let musicTrack = null;
+    let musicMetadata = null;
+    if (options?.includeMusicTrack !== false) {
+      try {
+        musicTrack = options?.musicTrackId
+          ? { id: options.musicTrackId }
+          : getMusicForDuration(
+              sceneImages.reduce((sum, img) => sum + img.duration, 0),
+              options?.musicMood
+            );
+        
+        musicMetadata = getMusicMetadata(musicTrack.id);
+        console.log(`[SimpleVideoGenerator] Selected music for downloadable video: ${musicMetadata?.title}`);
+      } catch (error) {
+        console.warn(`[SimpleVideoGenerator] Failed to select music:`, error);
+      }
+    }
+
     // Create a simple MP4 video file
     // In production, this would use FFmpeg to create a proper MP4
     // For now, we'll create a simple container with the images and metadata
 
+    const totalDuration = sceneImages.reduce((sum, img) => sum + img.duration, 0);
     const videoData = {
       type: "video/mp4",
       title: storyTitle,
       scenes: sceneImages,
-      totalDuration: sceneImages.reduce((sum, img) => sum + img.duration, 0),
+      totalDuration,
+      musicTrack: musicTrack ? { id: musicTrack.id, ...musicMetadata } : null,
       format: "simple_video_container",
     };
 
@@ -159,12 +207,11 @@ export async function generateDownloadableVideo(
       "video/mp4"
     );
 
-    const totalDuration = sceneImages.reduce((sum, img) => sum + img.duration, 0);
-
     return {
       videoUrl,
       duration: totalDuration,
       filename,
+      musicTrack: musicMetadata || undefined,
     };
   } catch (error) {
     console.error("[SimpleVideoGenerator] Downloadable video generation failed:", error);

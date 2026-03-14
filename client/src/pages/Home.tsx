@@ -29,6 +29,9 @@ export default function Home() {
             <h1 className="text-xl font-bold text-white">AI Video Storyteller</h1>
           </div>
           <div className="flex gap-4">
+            <Button variant="ghost" onClick={() => navigate("/pricing")} className="text-slate-300 hover:text-white">
+              Pricing
+            </Button>
             {isAuthenticated ? (
               <>
                 <span className="text-slate-300">{user?.name}</span>

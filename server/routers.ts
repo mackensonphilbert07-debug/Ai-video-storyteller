@@ -5,6 +5,8 @@ import { publicProcedure, router } from "./_core/trpc";
 import { videoRouter } from "./routers/video";
 import { generationRouter } from "./routers/generation";
 import { videoGenerationRouter } from "./routers/videoGeneration";
+import { subscriptionRouter } from "./routers/subscription";
+import { musicRouter } from "./routers/music";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -22,6 +24,8 @@ export const appRouter = router({
   video: videoRouter,
   generation: generationRouter,
   videoGen: videoGenerationRouter,
+  subscription: subscriptionRouter,
+  music: musicRouter,
 });
 
 export type AppRouter = typeof appRouter;
