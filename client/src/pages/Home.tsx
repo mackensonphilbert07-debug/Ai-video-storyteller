@@ -10,11 +10,13 @@ export default function Home() {
   const [location, navigate] = useLocation();
 
   const handleGetStarted = () => {
-    if (isAuthenticated) {
-      navigate("/generate");
-    } else {
+    // Always redirect to login first if not authenticated
+    if (!isAuthenticated) {
       window.location.href = getLoginUrl();
+      return;
     }
+    // Navigate to generator if authenticated
+    navigate("/generate");
   };
 
   return (
