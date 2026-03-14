@@ -29,36 +29,38 @@
 - [ ] Ajouter la synchronisation audio/vidéo
 - [ ] Tester la génération de vidéos de différentes durées
 
-## Phase 6 : Frontend - Interface Utilisateur
-- [ ] Créer la page d'accueil avec présentation
-- [ ] Implémenter l'éditeur de texte pour saisir l'histoire
-- [ ] Créer le formulaire de soumission d'histoire
-- [ ] Implémenter la page de gestion des projets
-- [ ] Créer la page de prévisualisation des scènes
-- [ ] Implémenter le système de téléchargement de vidéos
+## Phase 4 (Continued) : Frontend - Interface Utilisateur
+- [x] Créer l'éditeur de texte pour saisie d'histoire
+- [x] Implémenter le bouton "Générer les scènes"
+- [x] Créer la section d'affichage des images générées
+- [x] Implémenter le bouton "Créer la vidéo"
+- [x] Ajouter la génération de narration vocale
+- [x] Implémenter le bouton de téléchargement vidéo
+- [x] Ajouter les indicateurs de progression
+- [x] Implémenter la gestion des erreurs et messages utilisateur
 
-## Phase 7 : Frontend - Gestion des Projets
+## Phase 5 (Continued) : Frontend - Gestion des Projets
 - [ ] Implémenter la liste des projets utilisateur
 - [ ] Créer la page de détails du projet
 - [ ] Ajouter la fonctionnalité de suppression de projet
 - [ ] Implémenter l'historique des générations
 - [ ] Ajouter les statuts de progression
 
-## Phase 8 : Intégration et Tests
+## Phase 6 (Continued) : Intégration et Tests
 - [ ] Tester le pipeline complet texte → vidéo
 - [ ] Optimiser les performances
 - [ ] Ajouter les tests unitaires (Vitest)
 - [ ] Tester sur différentes longueurs d'histoires
 - [ ] Valider la qualité des vidéos générées
 
-## Phase 9 : Optimisations et Déploiement
+## Phase 7 (Continued) : Optimisations et Déploiement
 - [ ] Implémenter la mise en cache des résultats
 - [ ] Ajouter la gestion des files d'attente (job queue)
 - [ ] Optimiser l'utilisation des ressources GPU
 - [ ] Ajouter les logs et monitoring
 - [ ] Préparer le déploiement
 
-## Phase 10 : Version Mobile Android
+## Phase 8 : Version Mobile Android
 - [ ] Initialiser le projet Expo/React Native
 - [ ] Implémenter l'interface mobile
 - [ ] Créer les écrans de saisie d'histoire
@@ -66,7 +68,7 @@
 - [ ] Ajouter le téléchargement de vidéos
 - [ ] Tester sur Android
 
-## Phase 11 : Documentation et Livraison
+## Phase 9 : Documentation et Livraison
 - [ ] Écrire la documentation technique
 - [ ] Créer un guide d'utilisation
 - [ ] Documenter l'architecture et les APIs
