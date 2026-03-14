@@ -6,12 +6,12 @@ import { invokeLLM } from "../_core/llm";
 const CreateProjectSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
-  text: z.string().min(10, "Story text must be at least 10 characters"),
+  text: z.string().min(10, "Story text must be at least 10 characters").max(30000, "Story text cannot exceed 30,000 characters"),
 });
 
 const AnalyzeTextSchema = z.object({
   projectId: z.number(),
-  text: z.string(),
+  text: z.string().max(30000, "Story text cannot exceed 30,000 characters"),
 });
 
 export const videoRouter = router({

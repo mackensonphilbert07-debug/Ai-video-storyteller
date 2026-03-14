@@ -77,3 +77,8 @@
 - [ ] Documenter l'architecture et les APIs
 - [ ] Préparer les instructions d'installation
 - [ ] Livrer le projet final
+
+## Phase 10 : Améliorations et Optimisations
+- [x] Augmenter la limite de caractères à 30 000 pour les histoires longues
+- [x] Optimiser le traitement des histoires longues (8-10+ minutes)
+- [x] Ajouter la validation de longueur d'histoire au backend

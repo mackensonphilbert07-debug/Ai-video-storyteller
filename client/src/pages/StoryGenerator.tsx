@@ -39,6 +39,16 @@ export default function StoryGenerator() {
       return;
     }
 
+    if (storyText.length < 10) {
+      toast.error("L'histoire doit contenir au moins 10 caractères");
+      return;
+    }
+
+    if (storyText.length > 30000) {
+      toast.error("L'histoire ne peut pas dépasser 30 000 caractères");
+      return;
+    }
+
     if (!isAuthenticated) {
       toast.error("Veuillez vous connecter d'abord");
       return;
@@ -152,16 +162,16 @@ export default function StoryGenerator() {
 
                 <div>
                   <label className="text-sm font-medium text-slate-300 mb-2 block">
-                    Votre histoire (minimum 10 caractères)
+                    Votre histoire (minimum 10 caractères, maximum 30 000)
                   </label>
                   <Textarea
                     placeholder="Il était une fois, dans un royaume lointain..."
                     value={storyText}
-                    onChange={(e) => setStoryText(e.target.value)}
+                    onChange={(e) => setStoryText(e.target.value.substring(0, 30000))}
                     className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-500 min-h-64"
                   />
                   <p className="text-xs text-slate-400 mt-2">
-                    {storyText.length} caractères
+                    {storyText.length} / 30 000 caractères
                   </p>
                 </div>
 
