@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, videoProjects, InsertVideoProject, scenes, InsertScene, processingQueue, InsertProcessingQueueItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,94 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getUserById(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Video Projects queries
+export async function createVideoProject(userId: number, project: Omit<InsertVideoProject, 'userId'>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(videoProjects).values({
+    ...project,
+    userId,
+  });
+  
+  return result;
+}
+
+export async function getUserVideoProjects(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.select().from(videoProjects).where(eq(videoProjects.userId, userId));
+}
+
+export async function getVideoProjectById(projectId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select().from(videoProjects).where(eq(videoProjects.id, projectId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateVideoProject(projectId: number, updates: Partial<InsertVideoProject>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.update(videoProjects).set(updates).where(eq(videoProjects.id, projectId));
+}
+
+// Scenes queries
+export async function createScene(scene: InsertScene) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.insert(scenes).values(scene);
+}
+
+export async function getProjectScenes(projectId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.select().from(scenes).where(eq(scenes.projectId, projectId));
+}
+
+export async function updateScene(sceneId: number, updates: Partial<InsertScene>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.update(scenes).set(updates).where(eq(scenes.id, sceneId));
+}
+
+// Processing Queue queries
+export async function addToProcessingQueue(item: InsertProcessingQueueItem) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.insert(processingQueue).values(item);
+}
+
+export async function getPendingQueueItems(limit = 10) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.select().from(processingQueue)
+    .where(eq(processingQueue.status, "pending"))
+    .limit(limit);
+}
+
+export async function updateQueueItem(queueId: number, updates: Partial<InsertProcessingQueueItem>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return db.update(processingQueue).set(updates).where(eq(processingQueue.id, queueId));
+}

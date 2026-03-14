@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, longtext, json, decimal } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -25,4 +25,62 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+// Video Projects Table
+export const videoProjects = mysqlTable("video_projects", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: longtext("description"),
+  originalText: longtext("original_text").notNull(),
+  status: mysqlEnum("status", ["draft", "processing", "completed", "failed"]).default("draft").notNull(),
+  videoUrl: varchar("video_url", { length: 500 }),
+  videoDuration: int("video_duration"), // in seconds
+  sceneCount: int("scene_count").default(0),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type VideoProject = typeof videoProjects.$inferSelect;
+export type InsertVideoProject = typeof videoProjects.$inferInsert;
+
+// Scenes Table
+export const scenes = mysqlTable("scenes", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("project_id").notNull(),
+  sceneNumber: int("scene_number").notNull(),
+  title: varchar("title", { length: 255 }),
+  description: longtext("description").notNull(),
+  textContent: longtext("text_content").notNull(),
+  imagePrompt: longtext("image_prompt"),
+  status: mysqlEnum("status", ["pending", "generating_image", "generating_audio", "generating_video", "completed", "failed"]).default("pending").notNull(),
+  imageUrl: varchar("image_url", { length: 500 }),
+  audioUrl: varchar("audio_url", { length: 500 }),
+  videoUrl: varchar("video_url", { length: 500 }),
+  duration: decimal("duration", { precision: 5, scale: 2 }), // in seconds
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Scene = typeof scenes.$inferSelect;
+export type InsertScene = typeof scenes.$inferInsert;
+
+// Processing Queue Table (for background jobs)
+export const processingQueue = mysqlTable("processing_queue", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("project_id").notNull(),
+  sceneId: int("scene_id"),
+  taskType: mysqlEnum("task_type", ["analyze_text", "generate_image", "generate_audio", "generate_video", "compose_final_video"]).notNull(),
+  status: mysqlEnum("status", ["pending", "processing", "completed", "failed"]).default("pending").notNull(),
+  priority: int("priority").default(0),
+  retryCount: int("retry_count").default(0),
+  maxRetries: int("max_retries").default(3),
+  metadata: json("metadata"),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ProcessingQueueItem = typeof processingQueue.$inferSelect;
+export type InsertProcessingQueueItem = typeof processingQueue.$inferInsert;
