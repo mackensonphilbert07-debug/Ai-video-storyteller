@@ -12,22 +12,25 @@
 
 ## Phase 3 : Backend - Génération d'Images
 - [x] Intégrer Stable Diffusion ou FLUX pour la génération d'images
-- [ ] Créer la procédure tRPC pour générer des images par scène
-- [ ] Implémenter le stockage S3 pour les images générées
-- [ ] Ajouter la gestion des erreurs et retry logic
+- [x] Créer la procédure tRPC pour générer des images par scène
+- [x] Implémenter le stockage S3 pour les images générées
+- [x] Ajouter la gestion des erreurs et retry logic
+- [x] Implémenter la génération batch d'images pour toutes les scènes
 
 ## Phase 4 : Backend - Génération de Voix
 - [x] Intégrer Kokoro TTS ou XTTS-v2 pour la narration
-- [ ] Créer la procédure tRPC pour générer la voix off
-- [ ] Implémenter le stockage S3 pour les fichiers audio
-- [ ] Tester la qualité et la synchronisation audio
+- [x] Créer la procédure tRPC pour générer la voix off
+- [x] Implémenter le stockage S3 pour les fichiers audio
+- [x] Tester la qualité et la synchronisation audio
+- [x] Implémenter la génération de narration complète avec timing
 
 ## Phase 5 : Backend - Montage Vidéo
 - [x] Implémenter le pipeline FFmpeg pour la composition vidéo
-- [ ] Créer les workers pour convertir images en vidéos courtes
-- [ ] Implémenter l'assemblage des scènes en vidéo finale
-- [ ] Ajouter la synchronisation audio/vidéo
-- [ ] Tester la génération de vidéos de différentes durées
+- [x] Créer les workers pour convertir images en vidéos courtes
+- [x] Implémenter l'assemblage des scènes en vidéo finale
+- [x] Ajouter la synchronisation audio/vidéo
+- [x] Tester la génération de vidéos de différentes durées
+- [x] Implémenter le pipeline complet de génération (images + voix + montage)
 
 ## Phase 4 (Continued) : Frontend - Interface Utilisateur
 - [x] Créer l'éditeur de texte pour saisie d'histoire
