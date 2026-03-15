@@ -107,39 +107,28 @@ export default function Home() {
               <CardTitle className="text-white">Vidéo Complète</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-slate-300">Téléchargez votre vidéo finale (1-10+ minutes)</p>
+              <p className="text-slate-300">Téléchargez votre vidéo finale en haute qualité</p>
             </CardContent>
           </Card>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-slate-800/50 rounded-lg my-12">
-        <h3 className="text-2xl font-bold text-white mb-8 text-center">100% Open Source</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <p className="font-semibold text-purple-400">Stable Diffusion</p>
-            <p className="text-sm text-slate-300">Génération d'images</p>
-          </div>
-          <div>
-            <p className="font-semibold text-purple-400">Kokoro TTS</p>
-            <p className="text-sm text-slate-300">Génération de voix</p>
-          </div>
-          <div>
-            <p className="font-semibold text-purple-400">FFmpeg</p>
-            <p className="text-sm text-slate-300">Montage vidéo</p>
-          </div>
-          <div>
-            <p className="font-semibold text-purple-400">Manus LLM</p>
-            <p className="text-sm text-slate-300">Analyse de texte</p>
-          </div>
+      {/* CTA Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div className="space-y-6">
+          <h3 className="text-3xl font-bold text-white">Prêt à commencer ?</h3>
+          <p className="text-xl text-slate-300">
+            Créez votre première vidéo narrative en quelques minutes
+          </p>
+          <Button
+            onClick={handleGetStarted}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-6 px-8 text-lg"
+          >
+            <Sparkles className="mr-2 h-5 w-5" />
+            Commencer maintenant
+          </Button>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-700 bg-slate-900/50 py-8 text-center text-slate-400">
-        <p>© 2026 AI Video Storyteller. Tous droits réservés.</p>
-      </footer>
     </div>
   );
 }
