@@ -225,3 +225,83 @@
 - [ ] Implement email notifications for video generation completion
 - [ ] Add user dashboard with usage statistics
 - [ ] Create admin panel for managing users and plans
+
+
+## Phase 15 : Migration vers Render.com (Gratuit)
+- [ ] Préparer le code pour Render.com (configuration, scripts)
+- [ ] Configurer les variables d'environnement pour Render
+- [ ] Adapter la base de données MySQL vers PostgreSQL
+- [ ] Créer les migrations Drizzle pour PostgreSQL
+- [ ] Pousser le code vers GitHub
+- [ ] Configurer PostgreSQL gratuit sur Render
+- [ ] Déployer l'application sur Render.com
+- [ ] Tester l'application déployée
+- [ ] Vérifier que le bouton "Commencer" fonctionne
+- [ ] Vérifier que la génération de vidéos fonctionne
+- [ ] Documenter les instructions de déploiement
+
+
+## Phase 16 : Advanced AI Features (Current Sprint)
+
+### Story Generation
+- [ ] Create LLM story generation service
+- [ ] Add tRPC procedure for story generation
+- [ ] Implement story validation and parsing
+- [ ] Create UI for story input and generation
+- [ ] Add story history and templates
+
+### XTTS-v2 Voice Narration
+- [ ] Integrate XTTS-v2 API for voice synthesis
+- [ ] Support multiple languages (FR, EN, ES, HT)
+- [ ] Implement voice character selection
+- [ ] Add prosody and emotion control
+- [ ] Generate narration with proper timing
+
+### Subtitle Generation & Synchronization
+- [ ] Create subtitle generation service
+- [ ] Implement SRT format generation
+- [ ] Synchronize subtitles with audio
+- [ ] Add subtitle styling options
+- [ ] Test subtitle timing accuracy
+
+### Multilingual Translation
+- [ ] Implement translation service (4 languages)
+- [ ] Translate story text to FR/EN/ES/HT
+- [ ] Generate narration in each language
+- [ ] Create multilingual subtitle files
+- [ ] Add language selection UI
+
+### 1080p Video Creation with Transitions
+- [ ] Upgrade video generation to 1080p
+- [ ] Implement smooth transitions between scenes
+- [ ] Add animation effects (fade, slide, zoom)
+- [ ] Optimize video rendering performance
+- [ ] Test video quality and file size
+
+### One-Click Automated Pipeline
+- [ ] Create unified video generation workflow
+- [ ] Implement job queue system
+- [ ] Add real-time progress tracking
+- [ ] Handle error recovery and retries
+- [ ] Optimize resource usage
+
+### Frontend UI Enhancement
+- [ ] Create story generation interface
+- [ ] Add language selection UI
+- [ ] Implement video preview player
+- [ ] Add subtitle editor
+- [ ] Create project management dashboard
+
+### Testing & Quality Assurance
+- [ ] Write unit tests for all services
+- [ ] Integration tests for full pipeline
+- [ ] Performance testing and optimization
+- [ ] Compatibility testing with Render
+- [ ] User acceptance testing
+
+### Deployment & Documentation
+- [ ] Update Render deployment configuration
+- [ ] Create deployment guide
+- [ ] Document API endpoints
+- [ ] Write user documentation
+- [ ] Prepare production checklist

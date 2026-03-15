@@ -1,0 +1,62 @@
+{
+  "buildCommand": "bash build.sh",
+  "startCommand": "bash start.sh",
+  "envVars": [
+    {
+      "key": "NODE_ENV",
+      "value": "production"
+    },
+    {
+      "key": "PORT",
+      "value": "3000"
+    },
+    {
+      "key": "DATABASE_URL",
+      "value": ""
+    },
+    {
+      "key": "JWT_SECRET",
+      "value": ""
+    },
+    {
+      "key": "VITE_APP_ID",
+      "value": ""
+    },
+    {
+      "key": "OAUTH_SERVER_URL",
+      "value": "https://api.manus.im"
+    },
+    {
+      "key": "VITE_OAUTH_PORTAL_URL",
+      "value": "https://manus.im/oauth"
+    },
+    {
+      "key": "OWNER_OPEN_ID",
+      "value": ""
+    },
+    {
+      "key": "OWNER_NAME",
+      "value": ""
+    },
+    {
+      "key": "BUILT_IN_FORGE_API_URL",
+      "value": "https://api.manus.im"
+    },
+    {
+      "key": "BUILT_IN_FORGE_API_KEY",
+      "value": ""
+    },
+    {
+      "key": "VITE_FRONTEND_FORGE_API_URL",
+      "value": "https://api.manus.im"
+    },
+    {
+      "key": "VITE_FRONTEND_FORGE_API_KEY",
+      "value": ""
+    },
+    {
+      "key": "VITE_APP_TITLE",
+      "value": "AI Video Storyteller"
+    }
+  ]
+}
