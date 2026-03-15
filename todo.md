@@ -305,3 +305,15 @@
 - [ ] Document API endpoints
 - [ ] Write user documentation
 - [ ] Prepare production checklist
+
+## Phase 17 : Standalone Deployment (No Manus Dependencies)
+- [ ] Replace Manus OAuth with local authentication system
+- [ ] Integrate Ollama for LLM story generation
+- [ ] Integrate Piper TTS for voice narration
+- [ ] Integrate Argos Translate for multilingual support
+- [ ] Integrate Stable Diffusion for image generation
+- [ ] Configure all services for Render deployment
+- [ ] Create Docker configuration for services
+- [ ] Test complete pipeline without Manus
+- [ ] Deploy to Render and verify
+- [ ] Create standalone deployment guide

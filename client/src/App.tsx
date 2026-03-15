@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
 import StoryGenerator from "./pages/StoryGenerator";
 import ProjectGallery from "./pages/ProjectGallery";
 import PricingPage from "./pages/PricingPage";
@@ -15,6 +16,7 @@ function Router() {
   return (
     <Switch>
       <Route path={""} component={Home} />
+      <Route path={"/login"} component={LoginPage} />
       <Route path={"/generate"} component={StoryGenerator} />
       <Route path={"/video-generator"} component={VideoGenerator} />
       <Route path={"/projects"} component={ProjectGallery} />
@@ -35,7 +37,7 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider
-        defaultTheme="light"
+        defaultTheme="dark"
         // switchable
       >
         <TooltipProvider>
