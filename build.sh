@@ -30,19 +30,19 @@ echo "✅ Frontend built successfully"
 
 # Build backend
 echo "🖥️  Building backend with esbuild..."
-pnpm exec esbuild server/_core/index.ts \
+pnpm exec esbuild src/server.ts \
   --platform=node \
   --packages=external \
   --bundle \
   --format=esm \
-  --outdir=dist || {
+  --outfile=dist/server.js || {
   echo "❌ Failed to build backend"
   exit 1
 }
 
 # Verify backend build
-if [ ! -f "dist/index.js" ]; then
-  echo "❌ Backend build failed: index.js not found"
+if [ ! -f "dist/server.js" ]; then
+  echo "❌ Backend build failed: server.js not found"
   exit 1
 fi
 echo "✅ Backend built successfully"
@@ -58,4 +58,4 @@ fi
 echo "✅ Build completed successfully!"
 echo "📊 Build artifacts:"
 ls -lh dist/public/index.html 2>/dev/null || echo "⚠️  Frontend index.html not found"
-ls -lh dist/index.js 2>/dev/null || echo "⚠️  Backend index.js not found"
+ls -lh dist/server.js 2>/dev/null || echo "⚠️  Backend server.js not found"

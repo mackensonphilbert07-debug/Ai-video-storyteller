@@ -24,8 +24,8 @@ if [ ! -f "dist/public/index.html" ]; then
 fi
 
 # Verify backend bundle exists
-if [ ! -f "dist/index.js" ]; then
-  echo "❌ Backend bundle not found at dist/index.js"
+if [ ! -f "dist/server.js" ]; then
+  echo "❌ Backend bundle not found at dist/server.js"
   exit 1
 fi
 
@@ -33,7 +33,7 @@ echo "✅ All required files found"
 echo "📡 Starting Express server on port ${PORT:-3000}..."
 
 # Start the server with error handling
-node dist/index.js || {
+node dist/server.js || {
   echo "❌ Server failed to start"
   exit 1
 }
