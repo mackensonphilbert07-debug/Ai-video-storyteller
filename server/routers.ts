@@ -7,6 +7,7 @@ import { generationRouter } from "./routers/generation";
 import { videoGenerationRouter } from "./routers/videoGeneration";
 import { subscriptionRouter } from "./routers/subscription";
 import { musicRouter } from "./routers/music";
+import { aiVideoGenerationRouter } from "./routers/aiVideoGeneration";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -26,6 +27,7 @@ export const appRouter = router({
   videoGen: videoGenerationRouter,
   subscription: subscriptionRouter,
   music: musicRouter,
+  aiVideo: aiVideoGenerationRouter,
 });
 
 export type AppRouter = typeof appRouter;

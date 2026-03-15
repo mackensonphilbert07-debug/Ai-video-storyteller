@@ -1,9 +1,9 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sparkles, Zap, Palette, Download } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Home() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -15,8 +15,8 @@ export default function Home() {
       window.location.href = getLoginUrl();
       return;
     }
-    // Navigate to generator if authenticated
-    navigate("/generate");
+    // Navigate to video generator if authenticated
+    navigate("/video-generator");
   };
 
   return (

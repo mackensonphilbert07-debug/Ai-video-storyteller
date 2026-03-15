@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import StoryGenerator from "./pages/StoryGenerator";
 import ProjectGallery from "./pages/ProjectGallery";
 import PricingPage from "./pages/PricingPage";
+import VideoGenerator from "./pages/VideoGenerator";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -15,6 +16,7 @@ function Router() {
     <Switch>
       <Route path={""} component={Home} />
       <Route path={"/generate"} component={StoryGenerator} />
+      <Route path={"/video-generator"} component={VideoGenerator} />
       <Route path={"/projects"} component={ProjectGallery} />
       <Route path={"/pricing"} component={PricingPage} />
       <Route path={"/404"} component={NotFound} />
