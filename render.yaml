@@ -6,7 +6,7 @@ services:
     postgresSQLVersion: "15"
 
   - type: web
-    name: ai-video-api
+    name: ai-video-app
     plan: free
     runtime: node
     buildCommand: bash build.sh
@@ -42,25 +42,7 @@ services:
         sync: false
       - key: VITE_APP_TITLE
         value: AI Video Storyteller
-
-  - type: web
-    name: ai-video-frontend
-    plan: free
-    runtime: node
-    buildCommand: cd client && pnpm install && pnpm exec vite build
-    startCommand: pnpm preview
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          name: ai-video-api
-          property: url
-      - key: VITE_APP_ID
+      - key: VITE_ANALYTICS_ENDPOINT
         sync: false
-      - key: VITE_OAUTH_PORTAL_URL
-        value: https://manus.im/oauth
-      - key: VITE_FRONTEND_FORGE_API_URL
-        value: https://api.manus.im
-      - key: VITE_FRONTEND_FORGE_API_KEY
+      - key: VITE_ANALYTICS_WEBSITE_ID
         sync: false
-      - key: VITE_APP_TITLE
-        value: AI Video Storyteller
