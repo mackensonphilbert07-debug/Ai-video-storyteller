@@ -10,6 +10,7 @@ import StoryGenerator from "./pages/StoryGenerator";
 import ProjectGallery from "./pages/ProjectGallery";
 import PricingPage from "./pages/PricingPage";
 import VideoGenerator from "./pages/VideoGenerator";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -17,9 +18,21 @@ function Router() {
     <Switch>
       <Route path={""} component={Home} />
       <Route path={"/login"} component={LoginPage} />
-      <Route path={"/generate"} component={StoryGenerator} />
-      <Route path={"/video-generator"} component={VideoGenerator} />
-      <Route path={"/projects"} component={ProjectGallery} />
+      <Route path={"/generate"}>
+        <ProtectedRoute>
+          <StoryGenerator />
+        </ProtectedRoute>
+      </Route>
+      <Route path={"/video-generator"}>
+        <ProtectedRoute>
+          <VideoGenerator />
+        </ProtectedRoute>
+      </Route>
+      <Route path={"/projects"}>
+        <ProtectedRoute>
+          <ProjectGallery />
+        </ProtectedRoute>
+      </Route>
       <Route path={"/pricing"} component={PricingPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
