@@ -28,8 +28,9 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  const app = express();
-  const server = createServer(app);
+  try {
+    const app = express();
+    const server = createServer(app);
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -60,6 +61,31 @@ async function startServer() {
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
   });
+
+  // Handle server errors
+  server.on('error', (error: any) => {
+    console.error('❌ Server error:', error);
+    process.exit(1);
+  });
+
+  // Handle uncaught exceptions
+  process.on('uncaughtException', (error) => {
+    console.error('❌ Uncaught exception:', error);
+    process.exit(1);
+  });
+
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ Unhandled rejection at:', promise, 'reason:', reason);
+    process.exit(1);
+  });
+  } catch (error) {
+    console.error('❌ Error during server setup:', error);
+    process.exit(1);
+  }
 }
 
-startServer().catch(console.error);
+startServer().catch((error) => {
+  console.error("❌ Failed to start server:", error);
+  process.exit(1);
+});
